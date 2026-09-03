@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}FLEXON — Wear Your Flex{% endblock %}
+{% block content %}
+<section class="hero"><div class="container hero-inner"><div><div class="eyebrow">FLEXON CLOTHING</div><h1>WEAR YOUR<br><span>FLEX.</span></h1><p>Premium streetwear. Better prices. Limited offers.</p><a class="btn gold" href="#products">SHOP NOW</a></div><div class="hero-card"><div class="hero-x">FX</div><small>NEW DROP • LIMITED OFFER</small></div></div></section>
+<section class="container shop-section" id="products">
+<div class="section-head"><div><h2>Featured Products</h2><p>Original price + offer price like major marketplaces.</p></div>
+<form class="search" method="get"><input name="q" value="{{q}}" placeholder="Search products"><button>Search</button></form></div>
+<div class="chips"><a href="{{ url_for('home') }}" class="{{'active' if not category}}">All</a>{% for c in categories %}<a class="{{'active' if category==c}}" href="{{ url_for('home',category=c) }}">{{c}}</a>{% endfor %}</div>
+<div class="product-grid">{% for p in products %}
+<article class="product-card"><a href="{{ url_for('product',product_id=p.id) }}" class="product-img">{% if p.image_url %}<img src="{{p.image_url}}" alt="{{p.name}}">{% else %}<div>No image</div>{% endif %}{% if p.discount_percent %}<span class="discount">-{{p.discount_percent}}%</span>{% endif %}</a>
+<div class="product-body"><div class="cat">{{p.category}}</div><h3><a href="{{url_for('product',product_id=p.id)}}">{{p.name}}</a></h3>
+<div class="price"><b>{{money(p.sale_price)}}</b>{% if p.discount_percent %}<del>{{money(p.original_price)}}</del>{% endif %}</div>
+<div class="stock">{{p.stock}} in stock</div>
+<form method="post" action="{{url_for('add_cart',product_id=p.id)}}"><button class="btn block">Add to Cart</button></form></div></article>
+{% else %}<p>No products found.</p>{% endfor %}</div></section>
+{% endblock %}

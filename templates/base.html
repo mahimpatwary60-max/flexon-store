@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}FLEXON{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head><body>
+<header class="site-header"><div class="container nav">
+<a class="brand" href="{{ url_for('home') }}"><span>FLEX</span><b>ON</b></a>
+<nav><a href="{{ url_for('home') }}">Shop</a><a href="{{ url_for('track_order') }}">Track Order</a><a href="{{ url_for('cart') }}">Cart <span class="pill">{{ cart_count }}</span></a></nav>
+</div></header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="container flashes">{% for c,m in messages %}<div class="flash {{c}}">{{m}}</div>{% endfor %}</div>{% endif %}{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<footer><div class="container footer-grid"><div><div class="brand"><span>FLEX</span><b>ON</b></div><p>Wear Your Flex. Modern clothing for everyday confidence.</p></div><div><b>Customer Care</b><p><a href="{{ url_for('track_order') }}">Track your order</a></p><p>Cash on Delivery available.</p></div></div><div class="copyright">© {{ now().year if now is defined else 2026 }} FLEXON</div></footer>
+</body></html>
